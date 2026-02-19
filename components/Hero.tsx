@@ -1,7 +1,7 @@
 'use client'
 
 import { FiArrowRight, FiGithub, FiLinkedin } from 'react-icons/fi'
-import { RiWhatsappLine } from 'react-icons/ri'
+import { MdEmail } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
@@ -92,12 +92,12 @@ export default function Hero() {
                 <FiLinkedin className="text-2xl" />
               </a>
               <a
-                href="https://wa.me/085180768254"
+                href="barlidyu@apps.ipb.ac.id"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-slate-700/30 border border-slate-600/30 text-slate-300 hover:text-primary-400 hover:border-primary-500/30 hover:bg-primary-500/10 smooth-transition glow-effect-sm"
               >
-                <RiWhatsappLine className="text-2xl" />
+                <MdEmail className="text-2xl" />
               </a>
             </motion.div>
           </motion.div>
