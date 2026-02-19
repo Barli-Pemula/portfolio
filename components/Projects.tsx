@@ -12,7 +12,7 @@ export default function Projects() {
       tags: ['Next.js', 'React', 'Stripe', 'Tailwind CSS'],
       image: '🛍️',
       link: '#',
-      github: '#',
+      github: 'https://github.com/Barli-Pemula/Web-ShopHub.git',
     },
     {
       title: 'Task Management App',
@@ -20,7 +20,7 @@ export default function Projects() {
       tags: ['React', 'Firebase', 'TypeScript', 'Material-UI'],
       image: '✓',
       link: '#',
-      github: '#',
+      github: 'https://github.com/Barli-Pemula/TaskFlow.git',
     },
     {
       title: 'Weather Dashboard',
@@ -28,15 +28,15 @@ export default function Projects() {
       tags: ['JavaScript', 'Weather API', 'Chart.js', 'Responsive Design'],
       image: '🌤️',
       link: '#',
-      github: '#',
+      github: 'https://github.com/Barli-Pemula/Weather-Dashboard.git',
     },
     {
-      title: 'Portfolio Website',
-      description: 'Showcase this elegant portfolio built with Next.js, Framer Motion, and modern design.',
-      tags: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'Responsive'],
-      image: '💼',
+      title: 'Blog Platform',
+      description: 'A modern blogging platform with rich text editing, SEO optimization, and social sharing features.',
+      tags: ['Next.js', 'React', 'Firebase', 'Tailwind CSS'],
+      image: '✍️',
       link: '#',
-      github: '#',
+      github: 'https://github.com/Barli-Pemula/Blog-Program.git',
     },
   ]
 

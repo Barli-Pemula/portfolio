@@ -30,7 +30,7 @@ export default function Hero() {
     <section id="home" className="min-h-screen flex items-center pt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <motion.div
-          className="grid md:grid-cols-2 gap-12 items-center"
+          className="grid md:grid-cols-2 gap-8 items-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -51,7 +51,7 @@ export default function Hero() {
               >
                 <span className="text-white">Barlian Athallah Dyu</span>
                 <br />
-                <span className="text-slate-100">Computer Science | IPB University</span>
+                <span className="text-slate-100">Computer Science from IPB University</span>
               </motion.h1>
 
               <motion.p
@@ -104,10 +104,10 @@ export default function Hero() {
 
           {/* Profile Image */}
           <motion.div
-            className="relative hidden md:flex justify-center"
+            className="relative flex justify-center"
             variants={itemVariants}
           >
-            <div className="relative">
+            <div className="relative w-full max-w-xs md:max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl blur-2xl opacity-70"></div>
               <Image
                 src="/images/Foto arli.jpg"
@@ -115,7 +115,7 @@ export default function Hero() {
                 width={400}
                 height={500}
                 priority
-                className="relative rounded-3xl shadow-2xl object-cover"
+                className="relative rounded-3xl shadow-2xl object-cover w-full h-auto"
               />
             </div>
           </motion.div>
