@@ -35,7 +35,7 @@ export default function Projects() {
       description: 'A modern blogging platform with rich text editing, SEO optimization, and social sharing features.',
       tags: ['Next.js', 'React', 'Firebase', 'Tailwind CSS'],
       image: '/images/Preview Blog Program.png',
-      link: '#https://blog-program-two.vercel.app/',
+      link: 'https://blog-program-two.vercel.app/#',
       github: 'https://github.com/Barli-Pemula/Blog-Program.git',
     },
   ]
