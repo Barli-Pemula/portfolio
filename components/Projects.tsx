@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { FiGithub, FiExternalLink } from 'react-icons/fi'
+import { FiExternalLink } from 'react-icons/fi'
 import Image from 'next/image'
 
 export default function Projects() {
@@ -19,7 +19,7 @@ export default function Projects() {
       description: 'Collaborative task management application with real-time updates and team features.',
       tags: ['React', 'Firebase', 'TypeScript', 'Material-UI'],
       image: '✓',
-      link: '#',
+      link: 'https://task-flow-wheat-two.vercel.app/#',
       github: 'https://github.com/Barli-Pemula/TaskFlow.git',
     },
     {
@@ -124,13 +124,6 @@ export default function Projects() {
                     >
                       <FiExternalLink />
                       Visit
-                    </a>
-                    <a
-                      href={project.github}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-700/20 border border-slate-600/30 text-slate-300 hover:bg-slate-700/40 smooth-transition"
-                    >
-                      <FiGithub />
-                      Code
                     </a>
                   </div>
                 </div>
