@@ -10,15 +10,15 @@ export default function Projects() {
       title: 'E-Commerce Platform',
       description: 'A full-featured e-commerce platform built with Next.js and Stripe integration.',
       tags: ['Next.js', 'React', 'Stripe', 'Tailwind CSS'],
-      image: '🛍️',
-      link: '#',
+      image: '/images/Preview Web Shophub.png',
+      link: 'https://myshopweb-pi.vercel.app/#',
       github: 'https://github.com/Barli-Pemula/Web-ShopHub.git',
     },
     {
       title: 'Task Management App',
       description: 'Collaborative task management application with real-time updates and team features.',
       tags: ['React', 'Firebase', 'TypeScript', 'Material-UI'],
-      image: '✓',
+      image: '/images/Preview Task Flow.png',
       link: 'https://task-flow-wheat-two.vercel.app/#',
       github: 'https://github.com/Barli-Pemula/TaskFlow.git',
     },
@@ -26,16 +26,16 @@ export default function Projects() {
       title: 'Weather Dashboard',
       description: 'Beautiful weather dashboard with real-time data, forecasts, and location-based features.',
       tags: ['JavaScript', 'Weather API', 'Chart.js', 'Responsive Design'],
-      image: '🌤️',
-      link: '#',
+      image: '/images/Preview Weather Dashboard.png',
+      link: 'https://webdashboard-fawn.vercel.app/#',
       github: 'https://github.com/Barli-Pemula/Weather-Dashboard.git',
     },
     {
       title: 'Blog Platform',
       description: 'A modern blogging platform with rich text editing, SEO optimization, and social sharing features.',
       tags: ['Next.js', 'React', 'Firebase', 'Tailwind CSS'],
-      image: '✍️',
-      link: '#',
+      image: '/images/Preview Blog Program.png',
+      link: '#https://blog-program-two.vercel.app/',
       github: 'https://github.com/Barli-Pemula/Blog-Program.git',
     },
   ]
@@ -92,8 +92,13 @@ export default function Projects() {
                 whileHover={{ y: -5 }}
               >
                 {/* Project Image Area */}
-                <div className="relative h-48 bg-gradient-to-br from-primary-600/20 to-slate-800/40 border-b border-slate-700/30 flex items-center justify-center overflow-hidden">
-                  <div className="text-8xl group-hover:scale-110 smooth-transition">{project.image}</div>
+                <div className="relative h-48 bg-gradient-to-br from-primary-600/20 to-slate-800/40 border-b border-slate-700/30 overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 smooth-transition"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 smooth-transition"></div>
                 </div>
 
