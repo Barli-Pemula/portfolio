@@ -92,7 +92,7 @@ export default function Hero() {
                 <FiLinkedin className="text-2xl" />
               </a>
               <a
-                href="barlidyu@apps.ipb.ac.id"
+                href="mailto:barlidyu@apps.ipb.ac.id"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-slate-700/30 border border-slate-600/30 text-slate-300 hover:text-primary-400 hover:border-primary-500/30 hover:bg-primary-500/10 smooth-transition glow-effect-sm"
