@@ -1,4 +1,4 @@
-import { FiGithub, FiExternalLink } from 'react-icons/fi'
+import { FiExternalLink } from 'react-icons/fi'
 
 interface ProjectCardProps {
   title: string
@@ -18,43 +18,38 @@ export default function ProjectCard({
   github,
 }: ProjectCardProps) {
   return (
-    <div className="glass-dark border border-slate-700/30 rounded-xl overflow-hidden group hover:border-primary-500/30 smooth-transition">
-      <div className="relative h-48 bg-gradient-to-br from-primary-600/20 to-slate-800/40 border-b border-slate-700/30 flex items-center justify-center overflow-hidden">
+    <div className="luxury-card group overflow-hidden">
+      <div className="relative h-48 border-b border-neutral-800/50 flex items-center justify-center overflow-hidden bg-neutral-900/50">
         <div className="text-8xl group-hover:scale-110 smooth-transition">{image}</div>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 smooth-transition"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-60 smooth-transition" />
       </div>
 
-      <div className="p-6 space-y-4">
+      <div className="p-7 space-y-4">
         <div>
-          <h3 className="text-xl font-bold mb-2">{title}</h3>
-          <p className="text-slate-400">{description}</p>
+          <h3 className="font-serif text-xl font-bold text-white mb-2 group-hover:text-gold-400 smooth-transition">{title}</h3>
+          <p className="text-neutral-500 text-sm leading-relaxed">{description}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
           {tags.map((tag, index) => (
             <span
               key={index}
-              className="px-3 py-1 text-sm rounded-full bg-primary-600/20 border border-primary-500/30 text-primary-300"
+              className="px-3 py-1 text-xs rounded-full border border-gold-500/10 bg-gold-500/5 text-gold-400/80 font-medium"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-slate-700/30">
+        <div className="pt-4 border-t border-neutral-800/50">
           <a
             href={link}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary-600/20 border border-primary-500/30 text-primary-300 hover:bg-primary-600/40 smooth-transition"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-gold-500/15 text-gold-400 text-sm font-medium hover:bg-gold-500/10 hover:border-gold-500/30 smooth-transition"
           >
             <FiExternalLink />
             Visit
-          </a>
-          <a
-            href={github}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-700/20 border border-slate-600/30 text-slate-300 hover:bg-slate-700/40 smooth-transition"
-          >
-            <FiGithub />
-            Code
           </a>
         </div>
       </div>

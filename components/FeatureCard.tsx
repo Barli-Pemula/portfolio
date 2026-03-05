@@ -5,25 +5,20 @@ interface FeatureCardProps {
   icon: IconType
   title: string
   description: string
-  hover?: boolean
 }
 
 export default function FeatureCard({
   icon: Icon,
   title,
   description,
-  hover = true,
 }: FeatureCardProps) {
-  const hoverClass = hover ? 'group hover:border-primary-500/30 smooth-transition' : ''
-  const hoverEffect = hover ? 'group-hover:glow-effect-sm' : ''
-
   return (
-    <div className={`glass-dark p-6 rounded-xl border border-slate-700/30 ${hoverClass}`}>
-      <div className={`p-3 bg-primary-600/20 border border-primary-500/30 rounded-lg w-fit mb-4 ${hoverEffect}`}>
-        <Icon className="text-primary-400 text-2xl" />
+    <div className="luxury-card p-7 group">
+      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 border border-gold-500/15 bg-gold-500/5 group-hover:bg-gold-500/10 group-hover:border-gold-500/30 smooth-transition">
+        <Icon className="text-gold-400 text-xl" />
       </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-slate-400">{description}</p>
+      <h3 className="text-lg font-semibold text-white mb-3">{title}</h3>
+      <p className="text-neutral-500 text-sm leading-relaxed">{description}</p>
     </div>
   )
 }

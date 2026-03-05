@@ -12,7 +12,7 @@ export default function Contact() {
   })
   const [submitted, setSubmitted] = useState(false)
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -20,9 +20,8 @@ export default function Contact() {
     }))
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
     setSubmitted(true)
     setTimeout(() => setSubmitted(false), 3000)
     setFormData({ name: '', email: '', message: '' })
@@ -31,7 +30,7 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: FiMail,
-      label: 'Gmail',
+      label: 'Email',
       value: 'barlidyu@apps.ipb.ac.id',
       href: 'mailto:barlidyu@apps.ipb.ac.id',
     },
@@ -53,60 +52,65 @@ export default function Contact() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.15 },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6 },
+      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   }
 
   return (
-    <section id="contact" className="py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-28 relative">
+      <div className="divider-gold mb-28" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="space-y-16"
+          className="space-y-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-100px' }}
         >
           {/* Section Header */}
-          <motion.div className="text-center space-y-4" variants={itemVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              <span className="gradient-text">Get In Touch</span>
+          <motion.div className="text-center max-w-3xl mx-auto" variants={itemVariants}>
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="h-[1px] w-12 bg-gold-500/50" />
+              <span className="text-gold-400 text-sm font-medium uppercase tracking-[0.25em]">Kontak</span>
+              <div className="h-[1px] w-12 bg-gold-500/50" />
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              Mari{' '}
+              <span className="gradient-text-gold">Berkolaborasi</span>
             </h2>
-            <p className="text-slate-300 max-w-2xl mx-auto text-lg">
-              Have a project in mind? Let's connect and create something extraordinary together.
+            <p className="mt-6 text-neutral-400 text-lg leading-relaxed">
+              Punya proyek dalam pikiran? Mari terhubung dan ciptakan sesuatu yang luar biasa bersama.
             </p>
           </motion.div>
 
-          <motion.div
-            className="grid md:grid-cols-3 gap-6 mb-12"
-            variants={containerVariants}
-          >
+          {/* Contact Info Cards */}
+          <motion.div className="grid md:grid-cols-3 gap-5" variants={containerVariants}>
             {contactInfo.map((info, index) => {
               const Icon = info.icon
               return (
                 <motion.a
                   key={index}
                   href={info.href}
-                  className="glass-dark p-6 rounded-xl border border-slate-700/30 hover:border-primary-500/30 smooth-transition group text-center"
+                  className="luxury-card p-7 text-center group"
                   variants={itemVariants}
-                  whileHover={{ y: -5 }}
+                  whileHover={{ y: -6 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <div className="p-3 bg-primary-600/20 border border-primary-500/30 rounded-lg w-fit mx-auto mb-4">
-                    <Icon className="text-primary-400 text-2xl" />
+                  <div className="w-14 h-14 rounded-xl mx-auto flex items-center justify-center mb-5 border border-gold-500/15 bg-gold-500/5 group-hover:bg-gold-500/10 group-hover:border-gold-500/30 smooth-transition">
+                    <Icon className="text-gold-400 text-xl" />
                   </div>
-                  <h3 className="font-semibold mb-2">{info.label}</h3>
-                  <p className="text-slate-400 group-hover:text-primary-400 smooth-transition">{info.value}</p>
+                  <h3 className="font-semibold text-white mb-2">{info.label}</h3>
+                  <p className="text-neutral-500 text-sm group-hover:text-gold-400 smooth-transition">{info.value}</p>
                 </motion.a>
               )
             })}
@@ -114,13 +118,13 @@ export default function Contact() {
 
           {/* Contact Form */}
           <motion.div
-            className="glass-dark p-8 rounded-2xl border border-slate-700/30 max-w-2xl mx-auto w-full"
+            className="luxury-card p-10 md:p-14 max-w-2xl mx-auto"
             variants={itemVariants}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2 text-slate-300">
-                  Your Name
+                <label htmlFor="name" className="block text-sm font-medium mb-3 text-neutral-300 uppercase tracking-wider">
+                  Nama Anda
                 </label>
                 <input
                   type="text"
@@ -129,14 +133,14 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-slate-700/20 border border-slate-600/30 text-slate-100 placeholder-slate-500 focus:border-primary-500/50 focus:outline-none focus:ring-1 focus:ring-primary-500/20 smooth-transition"
-                  placeholder="Your name"
+                  className="w-full px-5 py-3.5 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-white placeholder-neutral-600 focus:border-gold-500/30 focus:outline-none focus:ring-1 focus:ring-gold-500/20 smooth-transition text-sm"
+                  placeholder="Masukkan nama Anda"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2 text-slate-300">
-                  Your Email
+                <label htmlFor="email" className="block text-sm font-medium mb-3 text-neutral-300 uppercase tracking-wider">
+                  Email Anda
                 </label>
                 <input
                   type="email"
@@ -145,14 +149,14 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-slate-700/20 border border-slate-600/30 text-slate-100 placeholder-slate-500 focus:border-primary-500/50 focus:outline-none focus:ring-1 focus:ring-primary-500/20 smooth-transition"
-                  placeholder="your.email@example.com"
+                  className="w-full px-5 py-3.5 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-white placeholder-neutral-600 focus:border-gold-500/30 focus:outline-none focus:ring-1 focus:ring-gold-500/20 smooth-transition text-sm"
+                  placeholder="email@contoh.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2 text-slate-300">
-                  Message
+                <label htmlFor="message" className="block text-sm font-medium mb-3 text-neutral-300 uppercase tracking-wider">
+                  Pesan
                 </label>
                 <textarea
                   id="message"
@@ -161,36 +165,31 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-lg bg-slate-700/20 border border-slate-600/30 text-slate-100 placeholder-slate-500 focus:border-primary-500/50 focus:outline-none focus:ring-1 focus:ring-primary-500/20 smooth-transition resize-none"
-                  placeholder="Tell me about your project or just say hi!"
-                ></textarea>
+                  className="w-full px-5 py-3.5 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-white placeholder-neutral-600 focus:border-gold-500/30 focus:outline-none focus:ring-1 focus:ring-gold-500/20 smooth-transition resize-none text-sm"
+                  placeholder="Ceritakan tentang proyek Anda atau sapa saya!"
+                />
               </div>
 
               <button
                 type="submit"
                 className="w-full btn-primary flex items-center justify-center gap-2 group"
               >
-                <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 smooth-transition" />
-                Send Message
+                <span className="relative z-10 flex items-center gap-2">
+                  <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                  Kirim Pesan
+                </span>
               </button>
 
               {submitted && (
                 <motion.div
-                  className="p-4 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300"
+                  className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm text-center"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  ✓ Thank you! Your message has been sent successfully.
+                  Terima kasih! Pesan Anda telah berhasil dikirim.
                 </motion.div>
               )}
             </form>
-          </motion.div>
-
-          {/* CTA */}
-          <motion.div className="text-center" variants={itemVariants}>
-            <p className="text-slate-400 mb-4">
-              Prefer to reach out directly? Feel free to send me an email or connect on social media.
-            </p>
           </motion.div>
         </motion.div>
       </div>

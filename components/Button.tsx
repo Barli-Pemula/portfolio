@@ -2,7 +2,7 @@ import React from 'react'
 
 interface ButtonProps {
   children: React.ReactNode
-  variant?: 'primary' | 'secondary' | 'text'
+  variant?: 'primary' | 'secondary'
   className?: string
   [key: string]: any
 }
@@ -16,12 +16,11 @@ export default function Button({
   const variants = {
     primary: 'btn-primary',
     secondary: 'btn-secondary',
-    text: 'btn-text',
   }
 
   return (
     <button className={`${variants[variant]} ${className}`} {...props}>
-      {children}
+      <span className="relative z-10">{children}</span>
     </button>
   )
 }

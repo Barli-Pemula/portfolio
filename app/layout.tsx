@@ -7,8 +7,8 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Frontend Developer Portfolio',
-  description: 'Elegant and professional portfolio showcasing my work as a frontend developer',
+  title: 'Barlian Athallah Dyu — Portfolio',
+  description: 'Exclusive portfolio showcasing elite frontend development craftsmanship by Barlian Athallah Dyu',
 }
 
 export default function RootLayout({
@@ -18,7 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-dark text-slate-100">
+      <body className="bg-dark text-neutral-200">
+        <div className="noise-overlay" />
         {children}
       </body>
     </html>

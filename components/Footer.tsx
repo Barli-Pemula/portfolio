@@ -39,32 +39,40 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="border-t border-slate-700/30 glass-dark">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="relative border-t border-neutral-800/30">
+      {/* Top gradient line */}
+      <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-500/20 to-transparent" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
-          className="grid md:grid-cols-3 gap-8 mb-8"
+          className="grid md:grid-cols-3 gap-12 mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
         >
           {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="gradient-text font-bold text-lg">DevPortfolio</h3>
-            <p className="text-slate-400 text-sm">
-              Crafting elegant digital experiences with passion and precision.
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg border border-gold-500/20 bg-gold-500/5 flex items-center justify-center">
+                <span className="font-serif text-lg font-bold text-gold-400">B</span>
+              </div>
+              <span className="font-serif text-xl font-semibold text-white">Barlian</span>
+            </div>
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
+              Menciptakan pengalaman digital yang elegan dengan dedikasi dan presisi tinggi.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-slate-200">Quick Links</h4>
-            <ul className="space-y-2">
+          <div className="space-y-5">
+            <h4 className="font-medium text-neutral-300 text-sm uppercase tracking-wider">Navigation</h4>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-slate-400 hover:text-primary-400 smooth-transition text-sm"
+                    className="text-neutral-500 hover:text-gold-400 smooth-transition text-sm"
                   >
                     {link.name}
                   </a>
@@ -74,9 +82,9 @@ export default function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-slate-200">Connect</h4>
-            <div className="flex gap-4">
+          <div className="space-y-5">
+            <h4 className="font-medium text-neutral-300 text-sm uppercase tracking-wider">Connect</h4>
+            <div className="flex gap-3">
               {socialLinks.map((social) => {
                 const Icon = social.icon
                 return (
@@ -85,10 +93,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-slate-400 hover:text-primary-400 hover:border-primary-500/30 hover:bg-primary-500/10 smooth-transition"
+                    className="w-10 h-10 rounded-lg border border-neutral-800/50 bg-neutral-900/30 flex items-center justify-center text-neutral-500 hover:text-gold-400 hover:border-gold-500/20 hover:bg-gold-500/5 smooth-transition"
                     title={social.name}
                   >
-                    <Icon className="text-xl" />
+                    <Icon className="text-lg" />
                   </a>
                 )
               })}
@@ -97,25 +105,20 @@ export default function Footer() {
         </motion.div>
 
         {/* Divider */}
-        <div className="border-t border-slate-700/30 my-8"></div>
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-neutral-800/50 to-transparent mb-8" />
 
         {/* Bottom */}
         <motion.div
-          className="flex flex-col md:flex-row justify-between items-center text-sm text-slate-400"
+          className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <p>© {currentYear} Frontend Developer. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-primary-400 smooth-transition">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-primary-400 smooth-transition">
-              Terms of Service
-            </a>
-          </div>
+          <p>© {currentYear} Barlian Athallah Dyu. All rights reserved.</p>
+          <p className="text-neutral-700">
+            Crafted with <span className="text-gold-500">precision</span> & passion
+          </p>
         </motion.div>
       </div>
     </footer>

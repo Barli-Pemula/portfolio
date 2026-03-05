@@ -22,9 +22,9 @@ export default function SocialButton({
       target={target}
       rel={rel}
       title={label}
-      className="p-3 rounded-lg bg-slate-700/30 border border-slate-600/30 text-slate-300 hover:text-primary-400 hover:border-primary-500/30 hover:bg-primary-500/10 smooth-transition glow-effect-sm"
+      className="p-3 rounded-xl border border-neutral-800 bg-neutral-900/50 text-neutral-400 hover:text-gold-400 hover:border-gold-500/30 hover:bg-gold-500/5 smooth-transition hover:shadow-[0_0_20px_rgba(212,175,55,0.1)]"
     >
-      <Icon className="text-2xl" />
+      <Icon className="text-xl" />
     </a>
   )
 }
