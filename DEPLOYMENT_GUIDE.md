@@ -145,7 +145,7 @@ git push -u origin main
 
 ### ❌ Foto profil tidak muncul setelah deploy
 
-- Pastikan file di `public/images/Foto arli.jpg` sudah ter-upload
+- Pastikan file di `public/BARLI.png` sudah ter-upload
 - Cek permissions folder `public/`
 - Anda mungkin perlu update file path jika berbeda
 

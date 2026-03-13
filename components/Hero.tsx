@@ -218,7 +218,7 @@ export default function Hero() {
               {/* Main image */}
               <div className="relative overflow-hidden rounded-[1.5rem] border border-gold-500/15 glow-gold">
                 <Image
-                  src="/images/Foto arli.jpg"
+                  src="/BARLI.png"
                   alt="Barlian Athallah Dyu"
                   width={450}
                   height={550}
