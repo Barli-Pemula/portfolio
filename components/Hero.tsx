@@ -112,14 +112,6 @@ export default function Hero() {
         >
           {/* Text Content */}
           <motion.div className="space-y-8 text-center lg:text-left order-2 lg:order-1" variants={itemVariants}>
-            {/* Greeting badge */}
-            <motion.div variants={itemVariants}>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/20 bg-gold-500/5 text-gold-400 text-sm font-medium tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse" />
-                Assalamualaikum Warahmatullahi Wabarakatuh
-              </span>
-            </motion.div>
-
             {/* Name */}
             <motion.div className="space-y-3" variants={itemVariants}>
               <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
