@@ -27,7 +27,7 @@ export default function Projects() {
       description: 'Dashboard cuaca dengan data real-time, prakiraan, dan fitur berbasis lokasi.',
       tags: ['JavaScript', 'Weather API', 'Chart.js', 'Responsive Design'],
       image: '/images/Preview Weather Dashboard.png',
-      link: 'https://webdashboard-fawn.vercel.app/#',
+      link: 'https://weather-dashboard-six-azure.vercel.app/#',
       github: 'https://github.com/Barli-Pemula/Weather-Dashboard.git',
     },
     {
