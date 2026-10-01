@@ -79,7 +79,7 @@ export default function Projects() {
         >
           {/* Section Header */}
           <motion.div className="max-w-3xl" variants={itemVariants}>
-            <div className="section-label mb-5">01 / Selected work</div>
+            <div className="section-label mb-5 whitespace-nowrap">01 / Selected work</div>
             <h2 className="editorial-heading text-4xl sm:text-6xl font-extrabold text-foreground leading-[1.02]">
               Featured <span className="gradient-text-gold">Projects</span>
             </h2>
