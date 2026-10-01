@@ -99,7 +99,7 @@ export default function About() {
           {/* Editorial Philosophy Statement Card */}
           <motion.div variants={itemVariants}>
             <div className="relative overflow-hidden border-t border-card-border pt-8 sm:pt-12">
-              <span className="font-mono text-7xl text-accent/10 absolute top-4 right-0 select-none pointer-events-none">
+              <span className="block text-right leading-none mb-4 font-mono text-7xl text-accent/10 sm:absolute sm:top-4 sm:right-0 sm:mb-0 select-none pointer-events-none">
                 01
               </span>
 
