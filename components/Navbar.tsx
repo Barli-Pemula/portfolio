@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX } from 'react-icons/fi'
+import { FiArrowUpRight } from 'react-icons/fi'
+import ThemeToggle from './ThemeToggle'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,13 +20,12 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 40)
 
-      // Detect active section
       const sections = navItems.map((item) => item.href.replace('#', ''))
       for (const section of sections.reverse()) {
         const el = document.getElementById(section)
-        if (el && window.scrollY >= el.offsetTop - 200) {
+        if (el && window.scrollY >= el.offsetTop - 220) {
           setActiveSection(section)
           break
         }
@@ -37,51 +37,56 @@ export default function Navbar() {
   }, [])
 
   return (
-    <motion.nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? 'py-3 bg-dark/80 backdrop-blur-xl border-b border-gold-500/10'
-          : 'py-5 bg-transparent'
-      }`}
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-lg border border-gold-500/30 group-hover:border-gold-500/60 smooth-transition" />
-              <div className="absolute inset-0 rounded-lg bg-gold-500/5 group-hover:bg-gold-500/10 smooth-transition" />
-              <span className="font-serif text-lg font-bold text-gold-400 relative z-10">B</span>
+    <header className="fixed top-0 inset-x-0 z-50 flex justify-center px-4 sm:px-8 pt-4 sm:pt-5 pointer-events-none">
+      <motion.nav
+        aria-label="Primary navigation"
+        className={`pointer-events-auto relative w-full max-w-7xl rounded-2xl transition-all duration-300 ${
+          scrolled
+            ? 'glass-nav py-2.5 px-4 sm:px-6'
+            : 'bg-transparent py-3 px-1 sm:px-2'
+        }`}
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="flex items-center justify-between">
+          {/* Logo with tactile badge */}
+          <a
+            href="#home"
+            className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg p-1"
+          >
+            <div className="relative w-8 h-8 rounded-lg bg-accent text-background flex items-center justify-center group-hover:rotate-[-6deg] transition-transform">
+              <span className="font-mono text-xs font-bold text-accent group-hover:scale-110 transition-transform">B</span>
             </div>
-            <div className="hidden sm:block">
-              <span className="font-serif text-lg font-semibold text-white tracking-wide">Barlian</span>
-              <div className="h-[1px] w-0 group-hover:w-full bg-gradient-to-r from-gold-500 to-transparent transition-all duration-500" />
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold tracking-tight text-foreground group-hover:text-accent transition-colors">
+                Barlian
+              </span>
+              <span className="text-[10px] font-mono text-muted tracking-widest uppercase -mt-0.5">
+                Engineer
+              </span>
             </div>
           </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop Nav Pills */}
+          <div className="hidden md:flex items-center gap-5">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace('#', '')
               return (
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`relative px-4 py-2 text-sm font-medium tracking-wider uppercase transition-all duration-400 ${
-                    isActive
-                      ? 'text-gold-400'
-                      : 'text-neutral-400 hover:text-white'
+                  aria-current={isActive ? 'page' : undefined}
+                    className={`relative py-2 text-xs font-medium tracking-wide transition-colors duration-200 interactive-link ${
+                    isActive ? 'text-foreground font-semibold' : 'text-muted hover:text-foreground'
                   }`}
                 >
-                  {item.name}
+                  <span className="relative z-10">{item.name}</span>
                   {isActive && (
                     <motion.span
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-gold-400"
-                      layoutId="activeNav"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      layoutId="activeNavPill"
+                      className="absolute -bottom-1 left-0 right-0 h-px bg-accent"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
                 </a>
@@ -89,59 +94,90 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <a href="#contact" className="px-5 py-2.5 rounded-lg text-sm font-semibold border border-gold-500/30 text-gold-400 hover:bg-gold-500/10 hover:border-gold-500/50 smooth-transition">
-              Let&apos;s Talk
-            </a>
-          </div>
+          {/* Right Actions: Theme Toggle + Contact CTA */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden relative w-10 h-10 flex items-center justify-center text-neutral-300 hover:text-gold-400 smooth-transition"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <FiX className="text-xl" /> : <FiMenu className="text-xl" />}
-          </button>
+            <a
+              href="#contact"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold border border-accent bg-accent text-background hover:bg-accent-hover transition-all duration-200 group"
+            >
+              <span>Let&apos;s Talk</span>
+                <span className="flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <FiArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </span>
+            </a>
+
+            {/* Mobile Animated Hamburger */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
+              className="md:hidden relative w-9 h-9 rounded-lg border border-card-border bg-card/60 flex items-center justify-center text-foreground"
+            >
+              <div className="w-4 h-3.5 flex flex-col justify-between items-center relative">
+                <span
+                  className={`w-full h-0.5 bg-foreground rounded-full transition-transform duration-300 ${
+                    isOpen ? 'rotate-45 translate-y-1.5' : ''
+                  }`}
+                />
+                <span
+                  className={`w-full h-0.5 bg-foreground rounded-full transition-opacity duration-200 ${
+                    isOpen ? 'opacity-0' : ''
+                  }`}
+                />
+                <span
+                  className={`w-full h-0.5 bg-foreground rounded-full transition-transform duration-300 ${
+                    isOpen ? '-rotate-45 -translate-y-1.5' : ''
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Dropdown Panel */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="md:hidden mt-4 pb-6"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              id="mobile-navigation"
+              className="md:hidden mt-3 p-4 rounded-2xl glass-nav border border-card-border"
+              initial={{ opacity: 0, scale: 0.96, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: -10 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="flex flex-col gap-1 pt-4 border-t border-neutral-800/50">
+              <div className="flex flex-col gap-1.5">
                 {navItems.map((item, i) => (
                   <motion.a
                     key={item.name}
                     href={item.href}
-                    className="px-4 py-3 text-neutral-300 hover:text-gold-400 hover:bg-gold-500/5 rounded-lg smooth-transition text-sm uppercase tracking-wider"
                     onClick={() => setIsOpen(false)}
-                    initial={{ opacity: 0, x: -20 }}
+                    className="px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-accent-subtle hover:text-accent transition-colors flex items-center justify-between"
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
+                    transition={{ delay: i * 0.04 }}
                   >
-                    {item.name}
+                    <span>{item.name}</span>
+                    <FiArrowUpRight className="w-3.5 h-3.5 text-muted" />
                   </motion.a>
                 ))}
                 <a
                   href="#contact"
-                  className="mt-3 mx-4 text-center btn-primary text-sm"
                   onClick={() => setIsOpen(false)}
+                  className="mt-2 w-full py-2.5 btn-primary text-xs font-semibold text-center"
                 >
-                  <span className="relative z-10">Let&apos;s Talk</span>
+                  <span className="relative z-10 flex items-center justify-center gap-1.5">
+                    Let&apos;s Talk
+                    <FiArrowUpRight className="w-3.5 h-3.5" />
+                  </span>
                 </a>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </motion.nav>
+      </motion.nav>
+    </header>
   )
 }

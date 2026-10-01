@@ -23,26 +23,26 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setTimeout(() => setSubmitted(false), 3500)
     setFormData({ name: '', email: '', message: '' })
   }
 
   const contactInfo = [
     {
       icon: FiMail,
-      label: 'Email',
+      label: 'Direct Email',
       value: 'barlidyu@apps.ipb.ac.id',
       href: 'mailto:barlidyu@apps.ipb.ac.id',
     },
     {
       icon: FiPhone,
-      label: 'Phone',
+      label: 'Direct Phone',
       value: '+62 851-8076-8254',
       href: 'tel:+6285180768254',
     },
     {
       icon: FiMapPin,
-      label: 'Location',
+      label: 'Base Location',
       value: 'Bogor, Indonesia',
       href: '#',
     },
@@ -52,78 +52,77 @@ export default function Contact() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 },
+      transition: { staggerChildren: 0.12 },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
     },
   }
 
   return (
-    <section id="contact" className="py-28 relative">
-      <div className="divider-gold mb-28" />
+    <section id="contact" className="section-shell relative">
+      <div className="divider-gold mb-12 sm:mb-16 max-w-7xl mx-auto px-4" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="space-y-20"
+          className="space-y-12 sm:space-y-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-80px' }}
         >
           {/* Section Header */}
-          <motion.div className="text-center max-w-3xl mx-auto" variants={itemVariants}>
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-[1px] w-12 bg-gold-500/50" />
-              <span className="text-gold-400 text-sm font-medium uppercase tracking-[0.25em]">Kontak</span>
-              <div className="h-[1px] w-12 bg-gold-500/50" />
-            </div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Mari{' '}
-              <span className="gradient-text-gold">Berkolaborasi</span>
+          <motion.div className="max-w-3xl space-y-4" variants={itemVariants}>
+            <div className="section-label">04 / Hubungi saya</div>
+            <h2 className="editorial-heading text-4xl sm:text-6xl font-extrabold text-foreground leading-[1.02]">
+              Mari <span className="gradient-text-gold">Berkolaborasi</span>
             </h2>
-            <p className="mt-6 text-neutral-400 text-lg leading-relaxed">
+            <p className="text-muted text-base sm:text-lg leading-relaxed font-normal max-w-2xl">
               Punya proyek dalam pikiran? Mari terhubung dan ciptakan sesuatu yang luar biasa bersama.
             </p>
           </motion.div>
 
-          {/* Contact Info Cards */}
-          <motion.div className="grid md:grid-cols-3 gap-5" variants={containerVariants}>
+          {/* 3 Contact Info Capsules */}
+          <motion.div className="grid sm:grid-cols-3 gap-px bg-card-border border-y border-card-border" variants={containerVariants}>
             {contactInfo.map((info, index) => {
               const Icon = info.icon
               return (
                 <motion.a
                   key={index}
                   href={info.href}
-                  className="luxury-card p-7 text-center group"
+                  className="bg-background p-6 sm:p-7 text-left group flex flex-col items-start justify-center"
                   variants={itemVariants}
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
+                  whileHover={{ y: -4 }}
                 >
-                  <div className="w-14 h-14 rounded-xl mx-auto flex items-center justify-center mb-5 border border-gold-500/15 bg-gold-500/5 group-hover:bg-gold-500/10 group-hover:border-gold-500/30 smooth-transition">
-                    <Icon className="text-gold-400 text-xl" />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 border border-accent/25 bg-accent-subtle text-accent group-hover:scale-105 group-hover:border-accent/50 transition-all duration-300">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-white mb-2">{info.label}</h3>
-                  <p className="text-neutral-500 text-sm group-hover:text-gold-400 smooth-transition">{info.value}</p>
+                  <h3 className="text-sm font-semibold text-foreground mb-1">{info.label}</h3>
+                  <p className="text-xs sm:text-sm font-mono text-muted group-hover:text-accent transition-colors">
+                    {info.value}
+                  </p>
                 </motion.a>
               )
             })}
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Interactive Contact Form */}
           <motion.div
-            className="luxury-card p-10 md:p-14 max-w-2xl mx-auto"
+            className="double-bezel p-8 sm:p-12 max-w-3xl mx-auto w-full"
             variants={itemVariants}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-3 text-neutral-300 uppercase tracking-wider">
+              <div className="space-y-2">
+                <label
+                  htmlFor="name"
+                  className="block text-xs font-mono font-medium uppercase tracking-wider text-foreground/80"
+                >
                   Nama Anda
                 </label>
                 <input
@@ -133,13 +132,16 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-5 py-3.5 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-white placeholder-neutral-600 focus:border-gold-500/30 focus:outline-none focus:ring-1 focus:ring-gold-500/20 smooth-transition text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-background border border-card-border text-foreground placeholder-subtle text-sm focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/40 transition-colors"
                   placeholder="Masukkan nama Anda"
                 />
               </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-3 text-neutral-300 uppercase tracking-wider">
+              <div className="space-y-2">
+                <label
+                  htmlFor="email"
+                  className="block text-xs font-mono font-medium uppercase tracking-wider text-foreground/80"
+                >
                   Email Anda
                 </label>
                 <input
@@ -149,13 +151,16 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-5 py-3.5 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-white placeholder-neutral-600 focus:border-gold-500/30 focus:outline-none focus:ring-1 focus:ring-gold-500/20 smooth-transition text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-background border border-card-border text-foreground placeholder-subtle text-sm focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/40 transition-colors"
                   placeholder="email@contoh.com"
                 />
               </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-3 text-neutral-300 uppercase tracking-wider">
+              <div className="space-y-2">
+                <label
+                  htmlFor="message"
+                  className="block text-xs font-mono font-medium uppercase tracking-wider text-foreground/80"
+                >
                   Pesan
                 </label>
                 <textarea
@@ -165,25 +170,25 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-5 py-3.5 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-white placeholder-neutral-600 focus:border-gold-500/30 focus:outline-none focus:ring-1 focus:ring-gold-500/20 smooth-transition resize-none text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-background border border-card-border text-foreground placeholder-subtle text-sm focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/40 transition-colors resize-none"
                   placeholder="Ceritakan tentang proyek Anda atau sapa saya!"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full btn-primary flex items-center justify-center gap-2 group"
+                className="w-full btn-primary py-3.5 px-6 text-sm font-semibold tracking-wide flex items-center justify-center gap-2 group"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                  Kirim Pesan
+                  <span>Kirim Pesan</span>
+                  <FiSend className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                 </span>
               </button>
 
               {submitted && (
                 <motion.div
-                  className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm text-center"
-                  initial={{ opacity: 0, y: -10 }}
+                  className="p-4 rounded-lg bg-accent-subtle border border-accent/25 text-accent font-mono text-xs sm:text-sm text-center"
+                  initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
                   Terima kasih! Pesan Anda telah berhasil dikirim.

@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react'
 import { motion, useSpring } from 'framer-motion'
 
 export default function ScrollProgress() {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const scaleX = useSpring(0, { stiffness: 100, damping: 30 })
+  const scaleX = useSpring(0, { stiffness: 200, damping: 30, restDelta: 0.001 })
 
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = window.scrollY / totalHeight
-      setScrollProgress(progress)
-      scaleX.set(progress)
+      if (totalHeight > 0) {
+        const progress = window.scrollY / totalHeight
+        scaleX.set(Math.min(Math.max(progress, 0), 1))
+      }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -21,11 +21,9 @@ export default function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-[2px] z-[100] origin-left"
-      style={{
-        scaleX,
-        background: 'linear-gradient(90deg, #D4AF37, #F5D061, #D4AF37)',
-      }}
+      className="fixed top-0 left-0 right-0 h-[2.5px] z-[100] origin-left bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 pointer-events-none"
+      style={{ scaleX }}
+      aria-hidden="true"
     />
   )
 }

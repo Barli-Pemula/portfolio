@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { FiArrowRight, FiGithub, FiLinkedin } from 'react-icons/fi'
+import { FiArrowUpRight, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { MdEmail } from 'react-icons/md'
-import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import Image from 'next/image'
 
-function useTypingEffect(texts: string[], typingSpeed = 80, deletingSpeed = 40, pauseTime = 2000) {
+function useTypingEffect(texts: string[], typingSpeed = 70, deletingSpeed = 35, pauseTime = 2200) {
   const [displayText, setDisplayText] = useState('')
   const [textIndex, setTextIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -35,13 +35,13 @@ function useTypingEffect(texts: string[], typingSpeed = 80, deletingSpeed = 40, 
   return displayText
 }
 
-function AnimatedCounter({ target, duration = 2, suffix = '' }: { target: number; duration?: number; suffix?: string }) {
+function AnimatedCounter({ target, duration = 1.8, suffix = '' }: { target: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    setCount(0)
     let start = 0
-    const increment = target / (duration * 60)
+    const frames = duration * 60
+    const increment = target / frames
     const timer = setInterval(() => {
       start += increment
       if (start >= target) {
@@ -66,95 +66,134 @@ export default function Hero() {
     'Computer Science Student',
   ])
 
+  // Mouse coordinate tracker for soft 3D tilt
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const rotateX = useTransform(mouseY, [-300, 300], [5, -5])
-  const rotateY = useTransform(mouseX, [-300, 300], [-5, 5])
+  const springConfig = { damping: 25, stiffness: 180 }
+  const springX = useSpring(mouseX, springConfig)
+  const springY = useSpring(mouseY, springConfig)
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const rotateX = useTransform(springY, [-250, 250], [6, -6])
+  const rotateY = useTransform(springX, [-250, 250], [-6, 6])
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
     mouseX.set(e.clientX - rect.left - rect.width / 2)
     mouseY.set(e.clientY - rect.top - rect.height / 2)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
   }
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.12, delayChildren: 0.15 },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
     },
   }
 
   const stats = [
-    { label: 'Projects', value: 3, suffix: '+' },
-    { label: 'Languages', value: 3, suffix: '+' },
+    { label: 'Featured Projects', value: 3, suffix: '+' },
+    { label: 'Core Languages', value: 3, suffix: '+' },
     { label: 'Year Learning', value: 1, suffix: '' },
   ]
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20 pb-10">
+    <section id="home" className="relative min-h-[100dvh] flex items-center pt-24 pb-10 lg:pt-24 lg:pb-20 overflow-hidden">
+      {/* Background Ambience Mesh */}
+      <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-accent/8 blur-[140px] animate-float-slow" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <motion.div
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+          className="grid lg:grid-cols-12 gap-8 lg:gap-8 items-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
         >
-          {/* Text Content */}
-          <motion.div className="space-y-8 text-center lg:text-left order-2 lg:order-1" variants={itemVariants}>
-            {/* Name */}
-            <motion.div className="space-y-3" variants={itemVariants}>
-              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-                <span className="text-white">Barlian</span>
-                <br />
-                <span className="shimmer-text">Athallah Dyu</span>
+          {/* Left Column: Hero Editorial Typography (7 cols) */}
+          <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
+            {/* Status Pill Tag */}
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2">
+              <span className="px-3.5 py-1 rounded-md text-[10px] font-mono tracking-[0.2em] uppercase border border-card-border bg-card/60 text-muted inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                Available for Selected Projects
+              </span>
+            </motion.div>
+
+            {/* Main Heading with Fluid Typography */}
+            <motion.div variants={itemVariants} className="space-y-2">
+              <h1 className="editorial-heading text-[clamp(3rem,7vw,6.7rem)] font-extrabold leading-[0.94] text-foreground">
+                Crafting refined{' '}
+                <span className="gradient-text-gold">digital interfaces</span>{' '}
+                with code.
               </h1>
             </motion.div>
 
-            {/* Typing role */}
-            <motion.div variants={itemVariants} className="h-8">
-              <p className="text-lg md:text-xl text-gold-400 font-mono">
-                {'> '}{typedText}
-                <span className="animate-pulse text-gold-300">|</span>
-              </p>
+            {/* Dynamic Typing Role */}
+            <motion.div variants={itemVariants} className="h-8 flex items-center justify-center lg:justify-start">
+              <div className="px-3 py-1 rounded-md border-l-2 border-accent font-mono text-xs sm:text-sm text-accent flex items-center gap-1.5">
+                <span className="text-muted font-bold">&gt;</span>
+                <span>{typedText}</span>
+                <span className="w-1.5 h-3.5 bg-accent animate-pulse inline-block" />
+              </div>
             </motion.div>
 
             {/* Description */}
             <motion.p
-              className="text-lg text-neutral-400 max-w-lg leading-relaxed mx-auto lg:mx-0"
               variants={itemVariants}
+              className="text-base sm:text-lg text-muted max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal text-wrap-pretty"
             >
               Mahasiswa Ilmu Komputer IPB University yang berdedikasi dalam menciptakan pengalaman digital yang
-              <span className="text-gold-400"> elegan</span>,
-              <span className="text-gold-400"> intuitif</span>, dan
-              <span className="text-gold-400"> berkesan</span>.
+              <span className="text-foreground font-medium"> elegan</span>,
+              <span className="text-foreground font-medium"> intuitif</span>, dan
+              <span className="text-foreground font-medium"> berkesan</span>.
             </motion.p>
 
-            {/* CTA Buttons */}
-            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" variants={itemVariants}>
-              <a href="#projects" className="btn-primary flex items-center justify-center gap-2 group">
-                <span className="relative z-10 flex items-center gap-2">
-                  Lihat Karya Saya
-                  <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+            {/* Button-in-Button Nested CTAs */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-3.5 justify-center lg:justify-start items-center"
+            >
+              <a
+                href="#projects"
+                className="btn-primary pl-6 pr-2.5 py-2.5 text-xs sm:text-sm font-semibold tracking-wide w-full sm:w-auto justify-between sm:justify-start group"
+              >
+                <span>Lihat Karya Saya</span>
+                <span className="ml-3 w-8 h-8 rounded-full bg-black/15 dark:bg-black/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <FiArrowUpRight className="w-4 h-4 text-dark" />
                 </span>
               </a>
-              <a href="#contact" className="btn-secondary flex items-center justify-center gap-2">
+
+              <a
+                href="#contact"
+                className="btn-secondary px-6 py-3 text-xs sm:text-sm font-medium tracking-wide w-full sm:w-auto text-center"
+              >
                 Hubungi Saya
               </a>
             </motion.div>
 
-            {/* Social Links */}
-            <motion.div className="flex gap-4 pt-2 justify-center lg:justify-start" variants={itemVariants}>
+            {/* Social Icons & Network */}
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center gap-2.5 justify-center lg:justify-start pt-2"
+            >
               {[
                 { icon: FiGithub, href: 'https://github.com/Barli-Pemula', label: 'GitHub' },
                 { icon: FiLinkedin, href: 'https://www.linkedin.com/in/barlian', label: 'LinkedIn' },
@@ -166,78 +205,81 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="p-3 rounded-xl border border-neutral-800 bg-neutral-900/50 text-neutral-400 hover:text-gold-400 hover:border-gold-500/30 hover:bg-gold-500/5 smooth-transition hover:shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                  className="w-10 h-10 rounded-full border border-card-border bg-card/40 flex items-center justify-center text-muted hover:text-accent hover:border-accent/40 hover:bg-accent-subtle transition-all duration-200"
                 >
-                  <social.icon className="text-xl" />
+                  <social.icon className="w-4 h-4" />
                 </a>
               ))}
             </motion.div>
 
-            {/* Stats */}
+            {/* Metrics Bento Section */}
             <motion.div
-              className="grid grid-cols-3 gap-6 pt-4 border-t border-neutral-800/50 max-w-md mx-auto lg:mx-0"
               variants={itemVariants}
+              className="grid grid-cols-3 gap-4 pt-6 border-t border-card-border max-w-lg mx-auto lg:mx-0"
             >
               {stats.map((stat) => (
-                <div key={stat.label} className="text-center lg:text-left">
-                  <div className="text-2xl md:text-3xl font-bold font-serif text-gold-400">
+                <div key={stat.label} className="text-center lg:text-left space-y-1">
+                  <div className="text-2xl sm:text-3xl font-mono font-bold text-foreground tabular-nums">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-xs text-neutral-500 uppercase tracking-widest mt-1">{stat.label}</div>
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-muted">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Profile Image */}
+          {/* Right Column: Double-Bezel Interactive Profile Canvas (5 cols) */}
           <motion.div
-            className="relative flex justify-center order-1 lg:order-2"
             variants={itemVariants}
-            style={{ perspective: 1000 }}
+            className="lg:col-span-5 relative flex justify-center order-first lg:order-last"
+            style={{ perspective: 1200 }}
           >
             <motion.div
-              className="relative w-full max-w-sm lg:max-w-md"
+              className="relative w-full max-w-[270px] sm:max-w-[340px] lg:max-w-[400px]"
               style={{ rotateX, rotateY }}
-              transition={{ type: 'spring', stiffness: 100, damping: 30 }}
             >
-              {/* Decorative rings */}
-              <div className="absolute -inset-4 rounded-[2rem] border border-gold-500/10 animate-pulse" />
-              <div className="absolute -inset-8 rounded-[2.5rem] border border-gold-500/5" />
+              {/* Soft Ambient Radiance */}
+              <div className="absolute -inset-4 bg-gradient-to-tr from-accent/20 via-transparent to-foreground/5 rounded-[2.5rem] blur-2xl opacity-60 pointer-events-none" />
 
-              {/* Gold gradient glow */}
-              <div className="absolute -inset-2 bg-gradient-to-br from-gold-500/20 via-transparent to-gold-600/20 rounded-[2rem] blur-2xl opacity-60" />
+              {/* Outer Machined Bezel Shell */}
+              <div className="p-2 sm:p-2.5 rounded-[2.25rem] bg-foreground/[0.03] border border-foreground/10 shadow-2xl">
+                {/* Inner Bezel Screen Canvas */}
+                <div className="relative rounded-[calc(2.25rem-0.625rem)] overflow-hidden border border-foreground/10 bg-surface">
+                  <Image
+                    src="/BARLI.png"
+                    alt="Barlian Athallah Dyu"
+                    width={450}
+                    height={550}
+                    priority
+                    className="w-full h-auto object-cover grayscale-[15%] hover:grayscale-0 transition-all duration-700 hover:scale-105"
+                  />
 
-              {/* Main image */}
-              <div className="relative overflow-hidden rounded-[1.5rem] border border-gold-500/15 glow-gold">
-                <Image
-                  src="/BARLI.png"
-                  alt="Barlian Athallah Dyu"
-                  width={450}
-                  height={550}
-                  priority
-                  className="relative w-full h-auto object-cover"
-                />
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-40" />
+                  {/* Gentle Gradient Mask */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Corner Accent Hairlines */}
+                  <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-accent/50 rounded-tl pointer-events-none" />
+                  <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-accent/50 rounded-tr pointer-events-none" />
+                </div>
               </div>
 
-              {/* Floating badge */}
+              {/* Floating Tactile Glass Capsule */}
               <motion.div
-                className="absolute -bottom-3 -right-3 px-4 py-2 rounded-xl glass-gold border border-gold-500/20 glow-gold-sm"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -bottom-4 right-2 sm:-right-4 px-4 py-2 rounded-full glass-nav border border-card-border shadow-xl flex items-center gap-2"
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <span className="text-gold-400 font-semibold text-sm">IPB University</span>
+                <span className="w-2 h-2 rounded-full bg-accent" />
+                <span className="text-xs font-mono font-medium text-foreground tracking-wide">
+                  IPB University
+                </span>
               </motion.div>
-
-              {/* Corner ornament */}
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-gold-500/30 rounded-tl-lg" />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-gold-500/30 rounded-br-lg" />
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
-
     </section>
   )
 }
