@@ -91,38 +91,46 @@ export default function Projects() {
           {/* Asymmetric Bento / Card Grid */}
           <motion.div className="flex lg:grid lg:grid-cols-3 gap-5 lg:gap-8 overflow-x-auto lg:overflow-visible snap-x snap-mandatory pb-4 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0" variants={containerVariants}>
             {projects.map((project, index) => {
-              const isSlot5 = index === 4
+              const isFeatured = index === 0
               return (
                 <motion.article
                   key={index}
-                  className="double-bezel group overflow-hidden flex flex-col justify-between min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-start"
+                  className={`double-bezel group overflow-hidden flex flex-col justify-between min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-start ${
+                    isFeatured ? 'lg:col-span-2' : ''
+                  }`}
                   variants={itemVariants}
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
                   {/* Top Media Canvas */}
-                  <div className="relative h-60 sm:h-72 w-full overflow-hidden bg-surface border-b border-card-border">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface border-b border-card-border">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 768px) 85vw, (max-width: 1280px) 50vw, 66vw"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none" />
-
-                    {/* Numeric Pill Badge */}
-                    <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-md glass-nav border border-card-border font-mono text-[11px] font-semibold text-accent">
-                      {String(index + 1).padStart(2, '0')}
+                    <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground">Featured case</span>
+                      <span className="inline-flex items-center gap-2 rounded-full bg-foreground px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-background">
+                        Explore <FiArrowUpRight className="h-3 w-3" />
+                      </span>
                     </div>
                   </div>
 
                   {/* Content Area */}
                   <div className="p-6 sm:p-8 space-y-5 flex-1 flex flex-col justify-between">
                     <div className="space-y-2.5">
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-200">
-                        {project.title}
-                      </h3>
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                          {project.title}
+                        </h3>
+                        <span className="shrink-0 font-mono text-[11px] font-semibold tracking-[0.16em] text-subtle">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
                       <p className="text-muted text-xs sm:text-sm leading-relaxed">
                         {project.description}
                       </p>
